@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORQ Internal - Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0e0e0e;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        #user-info {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        #user-info p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff3366;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .button:hover {
+            background-color: #e6194b;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(255, 51, 102, 0.3);
+        }
+        
+        .logo {
+            width: 120px;
+            margin-bottom: 2rem;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 51, 102, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(51, 153, 255, 0.15) 0%, transparent 40%);
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating-element {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .floating-element:nth-child(3) { bottom: 10%; left: 15%; animation-delay: 2s; }
+        .floating-element:nth-child(4) { bottom: 20%; right: 15%; animation-delay: 3s; }
+        .floating-element:nth-child(5) { top: 15%; left: 20%; animation-delay: 4s; }
+        .floating-element:nth-child(6) { top: 5%; right: 20%; animation-delay: 5s; }
+        .floating-element:nth-child(7) { bottom: 5%; left: 25%; animation-delay: 6s; }
+        .floating-element:nth-child(8) { bottom: 15%; right: 25%; animation-delay: 7s; }
+        .floating-element:nth-child(9) { top: 25%; left: 30%; animation-delay: 8s; }
+        .floating-element:nth-child(10) { top: 30%; right: 30%; animation-delay: 9s; }
+        .floating-element:nth-child(11) { bottom: 25%; left: 35%; animation-delay:2s; }
+        .floating-element:nth-child(12) { bottom: 30%; right: 35%; animation-delay: 5s; }
+        .floating-element:nth-child(13) { left: 15%; right: 35%; animation-delay: 4s; }
+        .floating-element:nth-child(14) { top: 10%; right: 35%; animation-delay: 1s; }
+        .floating-element:nth-child(15) { bottom: 80%; right: 35%; animation-delay: 3s; }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="floating-element">💼</div>
+    <div class="floating-element">📊</div>
+    <div class="floating-element">🚀</div>
+    <div class="floating-element">💡</div>
+    <div class="floating-element">🔴</div>
+    <div class="floating-element">🔵</div>
+    <div class="floating-element">🔹</div>
+    <div class="floating-element">🔺</div>
+    <div class="floating-element">🎉</div>
+    <div class="floating-element">💻</div>
+    <div class="floating-element">🎯</div>
+    <div class="floating-element">📈</div>
+    <div class="floating-element">📊</div>
+    <div class="floating-element">🔍</div>
+    <div class="floating-element">📝</div>
+    <div class="container">
+        <img src="/img/logo_WORQ.png" alt="WORQ Logo" class="logo">
+        <h1>Welcome to Your WORQ Space</h1>
+        <div id="user-info">
+            <!-- User information will be populated here by JavaScript -->
+        </div>
+        <a href="/auth/logout" id="logout-button" class="button">Log Out</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
