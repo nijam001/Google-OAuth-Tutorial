@@ -4,18 +4,18 @@ const axios = require('axios');
 
 function configureOAuth() {
   // Configure Google Strategy
+  //Authorization parameter
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
-    accessType: 'offline',
-    prompt: 'consent',
+    callbackURL: 'http://localhost:3000/auth/google/callback'
   },
   (accessToken, refreshToken, profile, done) => {
-    console.log('Full response:', { accessToken, refreshToken, profile });
-    
+    console.log('OAuth callback received');
+
     profile.accessToken = accessToken;
     profile.refreshToken = refreshToken;
+    console.log('Profile:', profile);
     return done(null, profile);
   }));
 
@@ -27,6 +27,7 @@ function configureOAuth() {
     done(null, user);
   });
 }
+
 
 /**
  * Refreshes a Google OAuth access token using a refresh token.

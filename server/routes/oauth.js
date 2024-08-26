@@ -6,7 +6,8 @@ const crypto = require('crypto');
 const { refreshAccessToken } = require('../oauthConfig');
 
 function generateState() {
-  return crypto.randomBytes(20).toString('hex');
+  return crypto.randomBytes(20)
+  .toString('hex');
 }
 
 router.get('/google', (req, res, next) => {
@@ -14,6 +15,10 @@ router.get('/google', (req, res, next) => {
   req.session.oauthState = state;
   passport.authenticate('google', { 
     scope: ['profile', 'email'],
+    accessType: 'offline',
+    prompt: 'consent',
+    includeGrantedScopes: true,
+    responseType: 'code',
     state: state
   })(req, res, next);
 });
@@ -25,42 +30,43 @@ router.get('/google/callback', (req, res, next) => {
   }
   delete req.session.oauthState;
 
-  passport.authenticate('google',{ failureRedirect: '/login' })
+  passport.authenticate('google',{
+    failureRedirect: '/login' 
+  })
   (req, res, next);
-}, (req, res) => {
+}, (req, res, ) => {
   req.session.accessToken = req.user.accessToken;
-  
-  if (req.user.refreshToken) {
-    req.session.refreshToken = req.user.refreshToken;
-    req.session.tokenType = 'refresh_token';
-  } else {
-    req.session.tokenType = 'access_token_only';
-  }
+  req.session.refreshToken = req.user.refreshToken;
 
+  console.log(req.session)
   res.redirect('/home');
 });
 
 router.get('/logout', (req, res, next) => {
   const accessToken = req.session.accessToken;
 
+  function destroyAndLogout() {
+    req.session.destroy(err => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.redirect('/');
+    });
+  }
+
   if (accessToken) {
     axios.post(`https://accounts.google.com/o/oauth2/revoke?token=${accessToken}`).then(() => {
       console.log('Google token revoked successfully');
-      logoutAndRedirect();
+      destroyAndLogout()
     }).catch((error) => {
       console.error('Error revoking Google token:', error.response?.data || error.message);
-      req.session.destroy(err => {
-        if (err) {
-          console.log(err);
-          return next(err);
-        }
-        res.redirect('/');
-      });
+      destroyAndLogout()
     });
   }
   else {
     console.log('No access token found, proceeding with logout');
-    logoutAndRedirect();
+    destroyAndLogout()
   }
 });
 

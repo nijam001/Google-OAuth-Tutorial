@@ -10,7 +10,13 @@ const oauthRoutes = require('./routes/oauth');
 const app = express();
 
 // Use Helmet!
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+    "img-src": ["'self'", "data:", "https://*.googleusercontent.com"],
+  },
+}));
+// app.use(helmet());
 
 // Configure session middleware
 app.use(session({
@@ -21,7 +27,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    // maxAge: 60 * 1000 // 1 minutes
+    // maxAge: 20 * 1000 // 20 seconds
   }
 }));
 
@@ -47,4 +53,5 @@ app.use((err, res) => {
 
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
+  console.log("Press Ctrl + C to end the server");
 });
