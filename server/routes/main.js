@@ -26,8 +26,15 @@ router.get('/home', isAuthenticated, (req, res) => {
 });
 
 router.get('/user', isAuthenticated, (req, res) => {
-  console.log(req.user);
   res.json(req.user);
 });
+
+router.get('/privacy', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'public', 'privacy.html'));
+})
+
+router.get('/tos', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'public', 'tos.html'));
+})
 
 module.exports = router;

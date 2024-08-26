@@ -7,9 +7,13 @@ function configureOAuth() {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: 'http://localhost:3000/auth/google/callback',
+    accessType: 'offline',
+    prompt: 'consent',
   },
   (accessToken, refreshToken, profile, done) => {
+    console.log('Full response:', { accessToken, refreshToken, profile });
+    
     profile.accessToken = accessToken;
     profile.refreshToken = refreshToken;
     return done(null, profile);
@@ -24,6 +28,12 @@ function configureOAuth() {
   });
 }
 
+/**
+ * Refreshes a Google OAuth access token using a refresh token.
+ *
+ * @param {string} refreshToken - The refresh token to use for refreshing the access token.
+ * @return {string} The newly refreshed access token.
+ */
 async function refreshAccessToken(refreshToken) {
   try {
     const response = await axios.post('https://oauth2.googleapis.com/token', {

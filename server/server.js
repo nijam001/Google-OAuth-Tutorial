@@ -1,5 +1,3 @@
-// File: app.js
-
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -23,6 +21,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    // maxAge: 60 * 1000 // 1 minutes
   }
 }));
 
@@ -41,7 +40,7 @@ app.use('/', mainRoutes);
 app.use('/auth', oauthRoutes);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err, res) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });

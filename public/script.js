@@ -19,9 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(user => {
         const userInfo = document.getElementById('user-info');
-        const profilePicUrl = user.photos && user.photos[0] ? user.photos[0].value : '/path/to/default-avatar.png';
         userInfo.innerHTML = `
-            <img src="${profilePicUrl}" alt="Profile Picture" onerror="this.src='/path/to/default-avatar.png';">
+            <img src="${user.photos[0].value}" alt="Profile Picture" width="100" ;">
             <p><strong>Name:</strong> ${user.displayName || 'N/A'}</p>
             <p><strong>Email:</strong> ${user.emails[0].value || 'N/A'}</p>
             <!-- Add more user information as needed -->
