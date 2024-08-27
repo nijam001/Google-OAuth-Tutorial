@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const { checkAndRefreshToken } = require('../oauthConfig');
 
 // Middleware to check if user is authenticated
 const isAuthenticated = (req, res, next) => {
@@ -21,11 +22,11 @@ router.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'public', 'login.html'));
 });
 
-router.get('/home', isAuthenticated, (req, res) => {
+router.get('/home', isAuthenticated, checkAndRefreshToken, (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'public', 'home.html'));
 });
 
-router.get('/user', isAuthenticated, (req, res) => {
+router.get('/user', isAuthenticated, checkAndRefreshToken,(req, res) => {
   res.json(req.user);
 });
 
