@@ -10,4 +10,4 @@ This tutorial demonstrates how to use the Google OAuth 2.0 API with Node.js and 
 * Exchanging the authorization code for an access token
 * Using the access token to make API requests
 
-Before you start, make sure you have installed the necessary modules and initialized dotenv. See the instructions in the `README.md` file for more information.
+Before you start, make sure you have installed the necessary modules and initialized dotenv.
